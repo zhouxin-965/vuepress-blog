@@ -2,8 +2,8 @@ module.exports={
   title:"周心的技术博客",
   head:[
     ['link',{rel:'icon',href:`/avatar.PNG`}],
-    ['link',{rel:'manifest',href:`/avatar.PNG`}],
-    ['link',{rel:'apple-touch-icon',href:`/avatar.PNG`}],
+    ['link',{rel:'manifest',href:`/spider.PNG`}],
+    ['link',{rel:'apple-touch-icon',href:`/spider.PNG`}],
   ],
   serviceWorker:true,
   themeConfig:{

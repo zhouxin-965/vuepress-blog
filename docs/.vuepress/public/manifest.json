@@ -8,7 +8,7 @@
   "theme_color":"blie",
   "icons":[
     {
-      "src":"./avatar.png",
+      "src":"./spider.png",
       "size":"144*144",
       "type":"image/png"
     }
