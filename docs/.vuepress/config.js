@@ -1,13 +1,13 @@
 module.exports={
   title:"周心的技术博客",
   head:[
-    ['link',{rel:'icon',href:`/avatar.PNG`}],
-    ['link',{rel:'manifest',href:`/spider.PNG`}],
-    ['link',{rel:'apple-touch-icon',href:`/spider.PNG`}],
+    ['link',{rel:'icon',href:`/spider.png`}],
+    ['link',{rel:'manifest',href:`/spider.png`}],
+    ['link',{rel:'apple-touch-icon',href:`/spider.png`}],
   ],
   serviceWorker:true,
   themeConfig:{
-    logo:'/avatar.PNG',//左上角logo
+    logo:'/spider.png',//左上角logo
     nav:[//导航栏配置
       {text:'首页',link:'/'},
       {text:'技术文档',link:'/tech/'}
