@@ -2,7 +2,10 @@ module.exports={
   title:"周心的技术博客",
   head:[
     ['link',{rel:'icon',href:`/avatar.PNG`}],
+    ['link',{rel:'manifest',href:`/avatar.PNG`}],
+    ['link',{rel:'apple-touch-icon',href:`/avatar.PNG`}],
   ],
+  serviceWorker:true,
   themeConfig:{
     logo:'/avatar.PNG',//左上角logo
     nav:[//导航栏配置

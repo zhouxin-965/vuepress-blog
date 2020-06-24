@@ -1,0 +1,25 @@
+{
+  "name":"周心",
+  "short_name":"周心",
+  "start_url":"index.html",
+  "display":"standalone",
+  "background_color":"#2196f3",
+  "description":"周心的个人主页",
+  "theme_color":"blie",
+  "icons":[
+    {
+      "src":"./avatar.png",
+      "size":"144*144",
+      "type":"image/png"
+    }
+  ],
+  "reated_applications":[
+    {
+      "platform":"web"
+    },
+    {
+      "platform":"play",
+      "url":"https://play.geogle.com/store/apps/details?id=cheeaunhackerweb"
+    }
+  ]
+}
