@@ -2,15 +2,15 @@
 home: true
 heroImage: /spider.png
 heroText: 我的主页
-tagline: My homepage
-actionText: 技术文档 →
-actionLinj: /tech/interview/
+tagline: 欢迎来到我得领域
+actionText: 学就完了
+actionLink: /tech/
 features:
-- title: HTML
+- title: HTML/CSS
   details: 常见的HTML知识点
-- title: CSS
-  details: 常见的CSS知识点
 - title: JS
   details: 常见的JS知识点
+- title: 踩过的坑
+  details: 万恶的坑
 footer: 周心的个人博客
 ---
