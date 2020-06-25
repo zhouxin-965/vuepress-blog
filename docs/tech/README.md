@@ -223,12 +223,13 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
     引用数据类型都可以通过他判断
 
 ### 2. 原型链
-1. var a = new person()
+1. `function person(){}`   
+   `var a = new person()` 
     - 构造函数有一个prototype属性
     - 实例对象有一个__proto__属性(尼玛，咋画图，不画图谁搞得清！！！)
     - 构造函数还有一个constructor指向这个实例，即person.constructor = a为ture
-    - 构造函数的prototype指向一个空的object对象(这个空object对象也有一个__proto__属性，指向顶级object对象，祖宗)
-    - 实列的__proto__也指向这个空的object对象(这个空object对象也有一个__proto__属性，指向顶级object对象，祖宗)  
+    - 构造函数的prototype指向一个空的object对象(这个空object对象也有一个__proto__属性，指向顶级object对象，祖宗，上面没人了，在__proto__ = null)
+    - 实列的__proto__也指向这个空的object对象(这个空object对象也有一个__proto__属性，指向顶级object对象，祖宗，上面没人了，在__proto__ = null)  
     意思就是 `person.prototype = a.__ proto __  `  
     当我们`var a = new person()`时发生了什么呢?
     ```
@@ -258,7 +259,67 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
     —————————————————————————————————————  
     —————————————————————————————————————   
     根据偷懒算法，显然`a.num = 12  a.age = 108`
-    有点编不下去了，下面讲变量提升和函数提升
+    终极大招，Function也是一个函数，他也是new Function产生的      
+    Object也是一个函数,也是 new Function产生的，即      
+    ` Function = new Function()     
+      Object = new Function()`      
+    此外，有句话叫做万物皆对象   
+    `
+    Function = new Object()   
+    Object = new Object()   
+    `
+    根据这几句代码，可以得出   
+    `
+    Function.__proto__ = Function.prototype   
+    Object.__proto__ = Function.prototype   
+
+    Function.__proto__ = Object.prototype   
+    Object.__proto__ = Object.prototype   
+    `
+
+### 3. 变量提升、执行上下文
+1. 当一个页面被加载时会发生什么呢？   
+- 首先-->页面被加载-->创建windows全局对象-->生成全局作用域-->生成执行上下文-->变量提升-->生成全局变量对象   
+  - 在执行全局代码之前，先将windows确定为全局执行上下文
+  - var 定义的全局变量和函数，添加到windows上为windows的属性，并赋值为null   
+  即 ```
+    console.log(a)   
+    var a=3
+    得到的结论是 undefined，即  console.log(a) ==> undefined   
+    ```   
+    这其中涉及到什么呢   
+    根据上文所说，先将windows确定为执行上下文   
+    然后 var  定义的变量，赋值为undefined, 且在windows上   
+    可以这样理解   
+    ```
+    var a;
+    console.log(a);
+    a=3;
+    ```
+    看到上面的代码可以知道 定义了a，但是喂赋值，所以为undefined   
+    所以```
+    console.log(fn)
+    var fn = function(){
+      console.log('a')
+    }
+    ```
+    这里`console.log(fn)`是什么呢？   
+    根据上面所说，是 undefined   
+    那么函数声明呢？函数声明和函数定义有什么区别？   
+    ```
+    console.log(gn)   
+    function gn(){
+      console.log('b')
+    }
+    ```
+    console.log(gn)==>function gn(){
+      console.log('b')
+    }
+    ```
+    windows会把函数声明的所有数据添加到他的属性里
+
+
+
 
 
 
