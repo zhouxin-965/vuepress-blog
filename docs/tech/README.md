@@ -209,10 +209,11 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
 3. function: 特殊的对象，存储可执行的代码
 4. Array: 特殊的对象，里面的数据有序，可以通过下标查找
 5. 数据类型判断方法
-    - type of: 返回数据类型的字符串表达，即```
-    var a
-    console(a)  // undefined
-    type of(a)  //'undefined'
+    - type of: 返回数据类型的字符串表达，即
+    ```
+      var a
+      console(a)  // undefined
+      type of(a)  //'undefined'
     ```
     可以判断String undefined boolean number
     - ==/=== 前者会先转换类型在判断是否相等，后者直接判断   
@@ -225,36 +226,30 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
 1. var a = new person()
     - 构造函数有一个prototype属性
     - 实例对象有一个__proto__属性(尼玛，咋画图，不画图谁搞得清！！！)
-    - 构造函数还有一个constructor指向这个实例，即person.constructor = a
+    - 构造函数还有一个constructor指向这个实例，即person.constructor = a为ture
     - 构造函数的prototype指向一个空的object对象(这个空object对象也有一个__proto__属性，指向顶级object对象，祖宗)
     - 实列的__proto__也指向这个空的object对象(这个空object对象也有一个__proto__属性，指向顶级object对象，祖宗)  
-    意思就是 person.prototype = a.__ proto __    
-    当我们var a = new person()时发生了什么呢?```
-    var a = {}   
-    a.__proto__ = person.prototype  //person.call(a)
+    意思就是 `person.prototype = a.__ proto __  `  
+    当我们`var a = new person()`时发生了什么呢?
+    ```
+      var a = {}   
+      a.__proto__ = person.prototype  //person.call(a)
     ```
     一目了然，先定义一个空对象，然后让创建的a的__proto__ 指向 person 的prototype   
-    当我们给person的prototype赋值会怎么样呢？```
-    person.prototype.number = 12```
-    显然```
-    a.__proto__.num = 12 //不是复制，是指向同一个对象，读值
-    ```
+    当我们给person的prototype赋值会怎么样呢？   
+    `person.prototype.number = 12`   
+    显然 `a.__proto__.num = 12` //不是复制，是指向同一个对象，读值
     而上文提到他们指向的空object对象的__proto__指向顶级object对象，就是那个祖宗。讲道理，祖宗就一个哈，事实祖宗就是一个，那么就是   
-    ```person.prototype.__proto__.age = 108
-    ```
-    那么，可以得出一个结论```
-    a.__proto__.__proto__.age = 108
-    ```
-    //读取这个age   
+    `person.prototype.__proto__.age = 108`   
+    那么，可以得出一个结论  `a.__proto__.__proto__.age = 108`  //读取这个age   
     问题来了，程序员不就是为了偷懒嘛！！！不然干嘛封装一个个对象、方法(其实，这个是我现在还没搞懂)   
     那些烦人的__proto__就给省略了，什么意思呢？下面进入有奖竞猜环节，中奖自理
-    ``` var a = new b()
+    ```
+      var a = new b()
       b.prototype.num = 12
       b.prototype.__proto__.age = 108
     ```
-    那么问题来了```
-    a.num = ?
-    a.age = ?```
+    那么问题来了`  a.num = ?   a.age = ?`
     给点提示偷懒。。。。。。
     下面公布答案，拿小本本画画吧      
     —————————————————————————————————————
@@ -262,9 +257,7 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
     ————————————煞费苦心的分割线——————————
     —————————————————————————————————————  
     —————————————————————————————————————   
-    根据偷懒算法，显然```
-    a.num = 12   
-    a.age = 108```   
+    根据偷懒算法，显然`a.num = 12  a.age = 108`
     有点编不下去了，下面讲变量提升和函数提升
 
 
