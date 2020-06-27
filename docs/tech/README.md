@@ -269,13 +269,13 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
     Object = new Object()   
     `
     根据这几句代码，可以得出   
-    `
+    ```
     Function.__proto__ = Function.prototype   
     Object.__proto__ = Function.prototype   
 
     Function.__proto__ = Object.prototype   
     Object.__proto__ = Object.prototype   
-    `
+    ```
 
 ### 3. 变量提升、执行上下文
 1. 当一个页面被加载时会发生什么呢？   
@@ -311,12 +311,40 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
     function gn(){
       console.log('b')
     }
-    ```
     console.log(gn)==>function gn(){
       console.log('b')
     }
     ```
-    windows会把函数声明的所有数据添加到他的属性里
+    windows会把函数声明的所有数据添加到他的属性里   
+    所以可以通过windows获取   
+    console.log(windows.a) = 3   
+    并且函数提升是优先于变量提升的   
+    看下面这段代码   
+    ```
+      console.log(a)  //f a(){console.log('11111)}  这里不是undefined的原因就是函数提升优先于变量提升
+      console.log(a()) // undefined
+      var a = 3
+      function a(){
+        console.log('11111')
+      }
+      console.log(a)  //3
+      a=6
+      console.log(a()) //a is not a function  这里被覆盖了，上一句代码赋值了
+      ```   
+      原理```
+        var a = function(){
+          console.log('11111')
+        }
+        var a
+        console.log(a)
+        console.log(a())
+
+        a=3
+        console.log(a) //3
+        a=6
+        console.log(a()) // a is not a function
+        ```
+        函数提升优先级比变量提升优先级高，不会被变量声明覆盖。但会被变量赋值覆盖
 
 
 

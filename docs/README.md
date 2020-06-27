@@ -2,7 +2,7 @@
 home: true
 heroImage: /spider.png
 heroText: 我的主页
-tagline: 欢迎来到我得领域
+tagline: 欢迎来到我的博客
 actionText: 学就完了
 actionLink: /tech/
 features:
