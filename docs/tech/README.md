@@ -202,6 +202,20 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
 3. opera  -o-   
 4. chrome safar -webkit- 
 
+### 28. 一次url请求的过程
+- 域名解析 --> 发起TCP的3次握手 --> 建立TCP连接后发起http请求 --> 服务器响应http请求，浏览器得到html代码 --> 浏览器解析html代码，并请求html代码中的资源（如js、css、图片等） --> 浏览器对页面进行渲染呈现给用户    
+1. 域名解析   当我们访问www.baidu.com时，首先浏览器会先解析这个域名(主机)的IP地址
+   先是浏览器看自身的dns缓存，看有没有对应的内容，有且没过期就进入2，没有就查找操作系统的dns缓存，看有没有，有且没过期也进入2，还没找到查找host文件夹，有没过期进入2，没有就请求运营商的dns缓存，让他给你。
+2. TCP连接通过三次握手建立，释放通过四次挥手。  什是三次握手？当你去要一个女孩子微信的时候，你说：“美女，能加个微信吗？”，女孩子打量了你一眼，能接收你的长相的时候，就问“你有钱吗？你有车吗？你有房吗？”，然后你说说并拿出证据，那么恭喜你，勾搭成功了，然后过起了没羞没臊的生活。
+3. 发送http请求  如我们要打开www.baidu.com, 客户端就向服务端请求访问这个页面
+4. 服务端响应这个页面，客户端就能得到请求的资源，如www.baidu.com的html代码。就像女孩子觉得你长得还可以，还有钱时，就把微信给你了。
+5. 客户端解析请求到的资源，如解析html代码，并请求html代码里的资源如图片等。就像你知道了女孩子的微信，你知道他的三围吗？还得厚着脸皮继续问嘛？(有感觉自己是老司机)
+6. 当上面的工作做完后，浏览器就能把这个页面呈现在我们眼前了。
+
+### 29. http与tcp
+1. TCP 运输层协议 传输数据
+2. http 应用层协议 怎么传输数据
+
 ## JS(全是学完自己的归纳总结，可能有些错误)
 ### 1. 数据类型
 1. 基本数据类型: string  number  boolean  null  undefined
@@ -227,7 +241,7 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
    `var a = new person()` 
     - 构造函数有一个prototype属性
     - 实例对象有一个__proto__属性(尼玛，咋画图，不画图谁搞得清！！！)
-    - 构造函数还有一个constructor指向这个实例，即person.constructor = a为ture
+    - 每个原型都有一个 constructor 属性指向关联的构造函数 实例原型指向构造函数 person.prototype.constructor=person
     - 构造函数的prototype指向一个空的object对象(这个空object对象也有一个__proto__属性，指向顶级object对象，祖宗，上面没人了，在__proto__ = null)
     - 实列的__proto__也指向这个空的object对象(这个空object对象也有一个__proto__属性，指向顶级object对象，祖宗，上面没人了，在__proto__ = null)  
     意思就是 `person.prototype = a.__ proto __  `  
@@ -331,7 +345,8 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
       a=6
       console.log(a()) //a is not a function  这里被覆盖了，上一句代码赋值了
       ```   
-      原理```
+      原理
+      ```
         var a = function(){
           console.log('11111')
         }
@@ -343,9 +358,78 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
         console.log(a) //3
         a=6
         console.log(a()) // a is not a function
-        ```
-        函数提升优先级比变量提升优先级高，不会被变量声明覆盖。但会被变量赋值覆盖
+      ```
+      函数提升优先级比变量提升优先级高，不会被变量声明覆盖。但会被变量赋值覆盖
 
+### 4. Cookie Session token
+- 由于Http是无状态信息的(当时的硬件与效率原因)，无法保存信息，而随着用户需求的增加，与服务器效率，用cokie session token来记录信息    
+    - cookie 明文 保存在客户端，不消耗服务器资源，不安全，是一个在硬盘的文件，有缓存作用，用来 存一些不敏感的消息
+    - 客户端发送信息(账号，密码),正确且用了session技术的话服务器会发送一个包含sesion id的cookie给客户端，客户端下次进入，向服务端发送这个cookie，如果服务端的session id 有这一个就成功了(cookie可以单独使用，sesson必须配合cookie使用)，最大的缺点就是服务器要记录session id，在现在，一些app的人数爆炸，如果存几万个，几十万个，就得返回500了
+    - token 不存储  会把header头以及保存用户信息得俩部分通过某种算法变成一个签名（加密后得一种验证码），在加密变成一串字符串。验证时解析这个字符串，得到header以及保存得信息部分及签名，在比较俩签名是否相同，相同那么header与信息是正确的
+
+### 5. MVC 与 MVVM
+1. MVC model + view + controller MVC的思想：一句话描述就是Controller负责将Model的数据用View显示出来
+    - model 数据存放的地方，提供接口供controller使用
+    - controller c处理应用程序中用户交互的部分 从视图层读取存在模型层，或者从模型层读取，渲染到视图层
+    - view 能看到的，一般都是模型层的数据   
+  view 与 model是单向的，不会直接交互，必须通过controller
+2. MVVM 以前，由于页面功能的操作不是那么的频繁，所以mvc完全应付的过来。而随着功能逐渐的丰富，view或model频繁的更改，dom被频繁的操作，controller就有点力不从心了。为了解决这个问题，就出现了MVVM，MV还是熟悉的配方，管理者自己的事，而区别就是VM,他能沟通MV，通过数据绑定将model转化为view,通过事件监听将view转化为model,从而对数据进行双向数据绑定(vue的object.defineProperty的set\get)
+
+### 6. 浅拷贝 深拷贝
+1. 浅拷贝 对原对象的引用，当你修改了某些值，原对象对应的值也会改变   
+  var obj = {
+    a:1;
+    arr:[2,3]
+  }
+  var cloneobj = clone(obj)
+
+  function clone(obj){
+    let newobj = {}
+    for(let item in obj){
+      if(obj.hasOwnProperty(item))  // 如果obj有item这个属性
+      {
+        newobj[item] = obj[item]
+      }
+    }
+    return newobj
+  }
+  newobj.arr[1]=100;
+  console.log(obj.arr[1])  //100
+  ```   
+  这里遍历的只是最前排，若对象里面只是基本数据类型，那么这也算是深拷贝了，包括obj.spice() obj.contact   
+  但如果里面包含引用数据类型，就行不通了
+
+2. 深拷贝 开辟一片新内存，将值拷贝过去
+    - Json.parse(Json.stringify())  最简单粗暴的一种方法
+    - 递归
+    ```
+      var obj = {
+       name:'周心',
+       age:22,
+       BirthPlace:['中国', '江西',  宜春']
+      }
+      let deepobj = deepClone(obj)
+      deepobj.BirthPlace[1]="湖南"
+      deepobj.BirthPlace[2]="长沙"
+      console.log(obj)  // ... 中国 江西 宜春
+      console.log(deepobj)  // ... 中国 湖南 长沙
+
+
+      function deepClone(obj){
+        var src = obj.constructor = Array?[]:{} // 判断obj属于啥子类型，并创建该空类型
+
+        for(let item in obj){
+          if(typeof obj[item]==="object"){
+            src[item]=deepClone(obj[item]);
+          }else{
+            src[item]=obj[item];
+         }
+        }
+        return src
+      }
+  ```
+
+    
 
 
 
