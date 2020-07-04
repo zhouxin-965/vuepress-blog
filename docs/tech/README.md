@@ -184,7 +184,88 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
 1. 绝对定位: 上下0 margin:auto   
 2. flex布: align-items:center   
 3. 文本: line-height:height   
-4. 表格: 父display:table 子display:table-ceil vertical-align:middle   
+
+#### 垂直水平居中
+```
+<style>
+  html,body{
+    height:100%;
+  }
+  #box{
+    box-sizing: border-box;
+    height: 50px;
+    width: 100px;
+  }
+</style>
+
+<body>
+  <div id="box"></div>
+</body>
+```
+  - 定位方法
+  1. 让他在屏幕中间，然后左移一半，上移一半，这必须要知道宽高
+    ```
+    body{
+      position:relative;
+    }
+    #box{
+      position:absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -25px;
+      margin-left: -50px;
+    }
+    ```
+    2. 这个是必须要有宽高
+    ```
+    body{
+      position:relative;
+    }
+    #box{
+      position:absolute;
+      top: 0;
+      left: 0;
+      right:0;
+      bottom:0;
+      margin:auto;
+    }
+    ```
+    3. css3
+    ```
+    body{
+      position:relative;
+    }
+    #box{
+      position:absolute;
+      top: 50%;
+      left: 50%;
+      transform:transition(-50%，-50%)
+    }
+    ```
+    - flex，让body里面的内容居中
+     ```
+      body{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+      }
+     ```
+    - JS 前提父元素 realtive
+    ```
+    <script>
+      let win = document.documentElement
+      winH =win.clientHeight
+      winW = win.clientWidth
+
+
+      boxH=box.offsetHeight
+      boxW=box.offsetWidth
+
+      box.style.position="absolute"
+      box.style.top=(winH-boxH)/2 + 'px'
+      box.style.left=(winW-boxW)/2 + 'PX'
+    </script>
+    ```
 
 ### 26. 重绘和回流(重排)
 1. 重排: dom的变化影响到元素的几何属性，浏览器重新计算元素的几何属性，其他元素的几何属性也会受到影响，浏览器就要重新构造渲染树，这就叫重排。   
@@ -205,7 +286,7 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
 ### 28. 一次url请求的过程
 - 域名解析 --> 发起TCP的3次握手 --> 建立TCP连接后发起http请求 --> 服务器响应http请求，浏览器得到html代码 --> 浏览器解析html代码，并请求html代码中的资源（如js、css、图片等） --> 浏览器对页面进行渲染呈现给用户    
 1. 域名解析   当我们访问www.baidu.com时，首先浏览器会先解析这个域名(主机)的IP地址
-   先是浏览器看自身的dns缓存，看有没有对应的内容，有且没过期就进入2，没有就查找操作系统的dns缓存，看有没有，有且没过期也进入2，还没找到查找host文件夹，有没过期进入2，没有就请求运营商的dns缓存，让他给你。
+   先是浏览器看自身的dns缓存，看有没有对应的IP地址，有且没过期就进入2，没有就查找操作系统的dns缓存，看有没有，有且没过期也进入2，还没找到查找host文件夹，有没过期进入2，没有就请求运营商的dns缓存，让他给你。
 2. TCP连接通过三次握手建立，释放通过四次挥手。  什是三次握手？当你去要一个女孩子微信的时候，你说：“美女，能加个微信吗？”，女孩子打量了你一眼，能接收你的长相的时候，就问“你有钱吗？你有车吗？你有房吗？”，然后你说说并拿出证据，那么恭喜你，勾搭成功了，然后过起了没羞没臊的生活。
 3. 发送http请求  如我们要打开www.baidu.com, 客户端就向服务端请求访问这个页面
 4. 服务端响应这个页面，客户端就能得到请求的资源，如www.baidu.com的html代码。就像女孩子觉得你长得还可以，还有钱时，就把微信给你了。
@@ -215,6 +296,9 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
 ### 29. http与tcp
 1. TCP 运输层协议 传输数据
 2. http 应用层协议 怎么传输数据
+
+### 30. 跨域
+1. 
 
 ## JS(全是学完自己的归纳总结，可能有些错误)
 ### 1. 数据类型
