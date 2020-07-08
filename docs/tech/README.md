@@ -216,6 +216,7 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
       margin-left: -50px;
     }
     ```
+
     2. 这个是必须要有宽高
     ```
     body{
@@ -230,6 +231,7 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
       margin:auto;
     }
     ```
+
     3. css3
     ```
     body{
@@ -242,6 +244,7 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
       transform:transition(-50%，-50%)
     }
     ```
+
     - flex，让body里面的内容居中
      ```
       body{
@@ -250,6 +253,7 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
         justify-content: center;
       }
      ```
+     
     - JS 前提父元素 realtive
     ```
     <script>
@@ -512,8 +516,124 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
         return src
       }
   ```
+### 7. 防抖 节流
+1. 防抖 相比于坐电梯，按了10s后电梯启动，后面来一个人按了，得等十秒，又来一个人按，再得等10s    
+   使用场景
+    - 搜索的时候，如果不设置防抖就会频繁的发送请求，增加服务器压力。   
+    无论你怎么点，点完最后一次，隔2s打印success
+    ```
+    <button id='btn'/>
 
-    
+    function success()=>{
+      console.log('success')
+    }
+    const debance = (fn,delay)=>{
+      let timer = null
+      return (...args)=>{
+        clearTimeout(timer)
+        timer = setTimeOut({
+          fn.apply(this,args)
+        },delay)
+      }
+    }
+    const odebance = debance(success,2000)
+    let btn = document.getElementById('btn')
+    btn.addEventListener('click',odebance)
+    ```
+
+
+
+2. 节流 在打王者的时候，你疯狂的用技能，疯狂的用技能，可是CD没到你摁的再快也没什么卵用，这就是节流的原理，在高频率的触发某件事的时候，只能在一定的时间段执行一次 
+    使用场景
+    - 滚动条滚动的时候，用户疯狂滚动，就会触发大量的函数，而用防抖完全是不明智的，这时候就要使用节流了。
+    - 游戏
+    ```
+    <button id='btn'/>
+
+    function success()=>{
+      console.log('success')
+    }
+    const throttle = (fn,delay)=>{
+      let flag = true
+      return (...args)=>{
+        if(!flag) return 
+        flag = false
+        timer = setTimeOut({
+          fn.apply(this)
+          flag = true
+        },delay)
+      }
+    }
+    const othrottle = throttle(success,2000)
+    let btn = document.getElementById('btn')
+    btn.addEventListener('click',othrottle)
+    ```
+### 8. 数组去重
+- indexof 寻找索引，如果有，返回第一次出现的索引，如果没有，返回-1  
+- includes 是否包含 是返回true 否则返回false  
+1. es6的filter 第一眼见到这个函数我就觉得秒呀，因为返回的是第一项的下标，就比如2，返回第一个2的下标1，然后第一个2的下标是2，说明重复了
+```  
+  let arr = [1, 2, 2, 3, 4, 5, 6, 4]
+  function getarr(arr){
+  let result = arr.filter((item,index) =>{
+    return arr.indexOf(item) == index
+  })
+   console.log(result) //1 2 3 4 5 6
+  }
+  getarr(arr)
+```
+2. es6的set，里面的元素必须独一无二，但是返回的不是数组,所以得转换一下
+```  
+  let arr = [1, 2, 2, 3, 4, 5, 6, 4]
+  function getarr(){
+   let result = Array.from(new Set(arr))
+   <!-- let result = [...new Set(arr)] -->
+   console.log(result) //1 2 3 4 5 6
+  }
+  getarr()
+```
+3. 创建一个新数组，然后循环，把没有得push进去
+```  
+  let arr = [1, 2, 2, 3, 4, 5, 6, 4]
+  function getarr(){
+    let result = []
+    arr.forEach(item=>{
+     if(result.indexOf(item) == -1)
+     result.push(item)
+   })
+   console.log(result)
+  }
+  getarr()
+```
+4. es6的reduce reduce有俩参数 第一个是前面返回的结果
+```
+let arr = [1, 2, 2, 3, 4, 5, 6, 4]
+function getarr(){
+    let result =arr.reduce((pre,item) =>{
+      return pre.includes(item)? pre:[...pre,item]
+    },[])
+      console.log(result)
+          
+  }
+  getarr()
+```
+5. 排序
+```
+let arr = [1, 2, 2, 3, 4, 5, 6, 4]
+function getarr(){
+  let result = []
+  let temp = arr.sort()
+  for(let i = 0; i<temp.length; i++){
+    if(temp[i]!=temp[i+1]){
+      result.push(temp[i])
+    }
+  }
+  console.log(result)
+}
+getarr()
+```
+
+
 
 
 
