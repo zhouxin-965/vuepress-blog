@@ -32,7 +32,7 @@
 ### 6. src、href、@import问题
 1. src 会暂停其他资源的加载,直到把src引用的资源加载、编译、执行完(流氓),这就是为什么script标签放页面底部   
 2. @import 和src这个流氓一样   
-3. href 这个就很好了，加载他引入的同时，还能加载其他的资源，这也是为什么建议用herf而不用@import
+3. href 这个就很好了，加载他引入的同时，还能加载其他的资源，这也是为什么建议用herf而不用@import 会开辟新的线程去处理
     - 重申web标准及wcc标准   
     - 标签闭合 标签小写 外链css/js 结构行为为表现的分离   
     - (插一个知识点)前端页面三大层次 结构层(html) 表现层(css) 行为层(js)
@@ -170,7 +170,6 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
 
 ### 23. position
 1. absolute: 绝对，相对于外面第一个父元素   
-2. fixed: 绝对，相对于浏览器窗口   
 3. relative: 相对，相对于本身    
 4. inherie: 从父元素继承
 
@@ -272,14 +271,15 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
     ```
 
 ### 26. 重绘和回流(重排)
-1. 重排: dom的变化影响到元素的几何属性，浏览器重新计算元素的几何属性，其他元素的几何属性也会受到影响，浏览器就要重新构造渲染树，这就叫重排。   
-2. 重绘: 浏览器受到影响的部分重新绘制到屏幕上的过程   
+1. 重排: 当dom的变化影响到元素的几何属性，比如改变元素的宽高，元素的位置，导致浏览器不得不重新计算元素的几何属性，并重新构造渲染树，这叫重排。   
+2. 重绘: 完成重排后，将重新构造的渲染树渲染到屏幕上，叫重绘。  
 3. 引起重排的原因
     - 添加或删除可见的dom   
     - 元素位置内容尺寸改变   
     - 页面初始化   
     - 浏览器窗口尺寸改变   
 4. 重排一定重绘，重绘不一定重排
+5. 涉及元素的几何更新，叫重排。而只涉及样式更新而不涉及几何更新，叫重绘。
 
 ### 27. 内核
 1. 火狐   -moz-   
@@ -399,7 +399,8 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
     a=3;
     ```
     看到上面的代码可以知道 定义了a，但是喂赋值，所以为undefined   
-    所以```
+    所以
+    ```
     console.log(fn)
     var fn = function(){
       console.log('a')
@@ -488,7 +489,7 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
   但如果里面包含引用数据类型，就行不通了
 
 2. 深拷贝 开辟一片新内存，将值拷贝过去
-    - Json.parse(Json.stringify())  最简单粗暴的一种方法
+    - Json.parse(Json.stringify())  最简单粗暴的一种方法，正则，fuunction拷贝不了 data()对象会变字符串
     - 递归
     ```
       var obj = {
@@ -540,8 +541,7 @@ jpg png jpeg svg webp(体检小，质量高，iphone不能用) Apng
     let btn = document.getElementById('btn')
     btn.addEventListener('click',odebance)
     ```
-
-
+  
 
 2. 节流 在打王者的时候，你疯狂的用技能，疯狂的用技能，可是CD没到你摁的再快也没什么卵用，这就是节流的原理，在高频率的触发某件事的时候，只能在一定的时间段执行一次 
     使用场景
@@ -612,8 +612,7 @@ function getarr(){
     let result =arr.reduce((pre,item) =>{
       return pre.includes(item)? pre:[...pre,item]
     },[])
-      console.log(result)
-          
+      console.log(result)  
   }
   getarr()
 ```
@@ -634,10 +633,75 @@ getarr()
 ```
 
 
+## React
+### 1.Node与webpack版本兼容性问题
+解决方案 https://blog.csdn.net/weixin_43967603/article/details/106146356
 
+### 2.this.setstate没及时更新问题
+  简单地说就是此时只更新了虚拟dom,还没更新页面
+  解决方案 https://blog.csdn.net/liulei21/article/details/81666199?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522160249051919724848306753%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=160249051919724848306753&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~rank_v25-2-81666199.pc_search_result_cache&utm_term=this.setstate%E7%AB%8B%E5%8D%B3%E6%9B%B4%E6%96%B0&spm=1018.2118.3001.4187
 
+### 3.onCancel={this.handleCancel}与onCancel={()this.handleCancel}与onCancel={()this.handleCancel()}问题
+Antd的input search的onsearch方法 onsearch{this.onsearch}有用    {()=>this.onsearch}就没用
+### 4.egg.js上传文件插件问题
+  config.default.js
+  config.uploadDir = 'app/public/avatar/upload';
+  config.multipart = {   // 配置上传
+    fileSize: '10mb',
+    mode: 'stream',
+    fileModeMatch: /^\/upload_file$/,
+    fileExtensions: ['.png', '.jpg', '.jpeg', '.gif'], // 扩展几种上传的文件格式
+};
+};
 
+### 4.egg.js配置跨域
+plugin.js
+module.exports = {
+  cors:{
+    enable:true,
+  package:'egg-cors',//必须写里面
+  }
+}
+config.default.js
+  config.security = {
+    csrf: {
+    　enable: false
+    　　},
+    domainWhiteList: [ '*' ] //根据需求改
+  };
+    
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+  };
 
+### 5.egg.js连接数据库
+plugin.js
+  module.exports = {
+  mysql: {
+    enable: true,
+    package: 'egg-mysql',
+  },
+};
+config,default.js
+config.mysql = {
+    client: {
+      host: 'localhost',
+      port: '3306',
+      user: 'root',
+      password: '123',
+      database: 'miaomiao',
+    },
+    app: true,
+    agent: false,
+  };
+  module.export  与 export default
+第一个是es5的，假如有加减乘除，要用加，打包的时候会全部打包出去
+第二个是es6的，如上，要用加，他会只打包加, 谷歌浏览器js代码使用率
 
-
+egg.js使用mysql没用Sequelize的情况下查询全表await this.app.mysql.select('表名');若是get只能查到一条数据
+{object} object区别
+{object} == {object:object}
+用的时候要.object得到
+而object直接得到
 
