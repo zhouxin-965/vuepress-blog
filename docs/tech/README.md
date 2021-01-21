@@ -705,3 +705,15 @@ egg.js使用mysql没用Sequelize的情况下查询全表await this.app.mysql.sel
 用的时候要.object得到
 而object直接得到
 
+## Uni-app
+### 刷新当前页面
+  当我们做修改或者删除的时候，数据是会变化的，当子组件调用父组件的请求数据方法时，基本行的通，但我有一个项目会报错，大概原因是Uview的组件限制了一个唯一的属性还是咋地，报错，所以可以让该页面刷新
+  api:uni.redirectTo({
+					url:'../../pages/lost/index'
+				});
+  ### 将动态的参数当变量
+  情景:
+  ```<view v-for="(item, index) in list" :key="item.id" 
+				@click="click(item)" 
+			>````
+      我们可以在data里创建一个变量，在click方法里面把值赋过去，这样就能在任何地方拿到某一行的数据了
